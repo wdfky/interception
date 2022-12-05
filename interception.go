@@ -38,7 +38,7 @@ func New() *Interception {
 	}
 	ctx, _, errno := syscall.SyscallN(uintptr(proc))
 	if errno != 0 {
-		panic("CreateContext " + err.Error())
+		panic("CreateContext " + errno.Error())
 	}
 	return &Interception{handle: h, ctx: ctx}
 }
@@ -61,7 +61,7 @@ func (i *Interception) CreateContext() {
 	}
 	ctx, _, errno := syscall.SyscallN(uintptr(proc))
 	if errno != 0 {
-		panic("CreateContext " + err.Error())
+		panic("CreateContext " + errno.Error())
 	}
 	i.ctx = ctx
 }
@@ -91,7 +91,7 @@ func (i *Interception) SetFilter(callback uintptr, filter Filter) {
 	}
 	_, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(callback), uintptr(filter))
 	if errno != 0 {
-		panic("SetFilter " + err.Error())
+		panic("SetFilter " + errno.Error())
 	}
 }
 
@@ -102,7 +102,7 @@ func (i *Interception) Wait() int {
 	}
 	r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx))
 	if errno != 0 {
-		panic("Wait " + err.Error())
+		panic("Wait " + errno.Error())
 	}
 	return int(r)
 }
@@ -116,13 +116,13 @@ func (i *Interception) Receive(device int, stroke interface{}) int {
 	case *MouseStroke:
 		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*MouseStroke))))
 		if errno != 0 {
-			panic("Receive " + err.Error())
+			panic("Receive " + errno.Error())
 		}
 		return int(r)
 	case *KeyBoardStroke:
 		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*KeyBoardStroke))))
 		if errno != 0 {
-			panic("Receive " + err.Error())
+			panic("Receive " + errno.Error())
 		}
 		return int(r)
 	default:
@@ -140,13 +140,13 @@ func (i *Interception) Send(device int, stroke interface{}) int {
 	case *MouseStroke:
 		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*MouseStroke))))
 		if errno != 0 {
-			panic("Send " + err.Error())
+			panic("Send " + errno.Error())
 		}
 		return int(r)
 	case *KeyBoardStroke:
 		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*KeyBoardStroke))))
 		if errno != 0 {
-			panic("Send " + err.Error())
+			panic("Send " + errno.Error())
 		}
 		return int(r)
 	default:
