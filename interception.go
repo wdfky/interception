@@ -114,13 +114,13 @@ func (i *Interception) Receive(device int, stroke interface{}) int {
 	}
 	switch stroke.(type) {
 	case *MouseStroke:
-		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*MouseStroke))))
+		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*MouseStroke))), uintptr(1))
 		if errno != 0 {
 			panic("Receive " + errno.Error())
 		}
 		return int(r)
 	case *KeyBoardStroke:
-		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*KeyBoardStroke))))
+		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*KeyBoardStroke))), uintptr(1))
 		if errno != 0 {
 			panic("Receive " + errno.Error())
 		}
@@ -138,13 +138,13 @@ func (i *Interception) Send(device int, stroke interface{}) int {
 	}
 	switch stroke.(type) {
 	case *MouseStroke:
-		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*MouseStroke))))
+		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*MouseStroke))), uintptr(1))
 		if errno != 0 {
 			panic("Send " + errno.Error())
 		}
 		return int(r)
 	case *KeyBoardStroke:
-		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*KeyBoardStroke))))
+		r, _, errno := syscall.SyscallN(uintptr(proc), uintptr(i.ctx), uintptr(device), uintptr(unsafe.Pointer(stroke.(*KeyBoardStroke))), uintptr(1))
 		if errno != 0 {
 			panic("Send " + errno.Error())
 		}
